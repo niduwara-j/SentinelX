@@ -15,38 +15,38 @@ interface DashboardLayoutProps {
 
 function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <div className="flex h-screen bg-dark-bg">
+    <div className="flex h-screen bg-[#0F172A]">
       {/* Sidebar */}
-      <aside className="w-64 bg-dark-sidebar border-r border-dark-border flex flex-col">
-        <div className="p-6 border-b border-dark-border">
-          <h1 className="text-2xl font-bold text-text-primary">SentinelX</h1>
+      <aside className="w-64 bg-[#111827] border-r border-[#334155] flex flex-col">
+        <div className="p-6 border-b border-[#334155]">
+          <h1 className="text-2xl font-bold text-white">SentinelX</h1>
         </div>
         
         <nav className="flex-1 p-4 space-y-1">
-          <Link to="/dashboard" className="flex items-center gap-3 px-4 py-2 text-text-secondary hover:bg-dark-card hover:text-text-primary rounded-lg transition-colors">
+          <Link to="/dashboard" className="flex items-center gap-3 px-4 py-2 text-[#94A3B8] hover:bg-[#1E293B] hover:text-white rounded-lg transition-colors">
             <LayoutDashboard size={20} />
             Dashboard
-        </Link>
-        <Link to="/scan" className="flex items-center gap-3 px-4 py-2 text-text-secondary hover:bg-dark-card hover:text-text-primary rounded-lg transition-colors">
+          </Link>
+          <Link to="/scan" className="flex items-center gap-3 px-4 py-2 text-[#94A3B8] hover:bg-[#1E293B] hover:text-white rounded-lg transition-colors">
             <Scan size={20} />
             Network Scan
-        </Link>
-        <Link to="/assets" className="flex items-center gap-3 px-4 py-2 text-text-secondary hover:bg-dark-card hover:text-text-primary rounded-lg transition-colors">
+          </Link>
+          <Link to="/assets" className="flex items-center gap-3 px-4 py-2 text-[#94A3B8] hover:bg-[#1E293B] hover:text-white rounded-lg transition-colors">
             <Package size={20} />
             Assets
-        </Link>
-        <Link to="/reports" className="flex items-center gap-3 px-4 py-2 text-text-secondary hover:bg-dark-card hover:text-text-primary rounded-lg transition-colors">
+          </Link>
+          <Link to="/reports" className="flex items-center gap-3 px-4 py-2 text-[#94A3B8] hover:bg-[#1E293B] hover:text-white rounded-lg transition-colors">
             <FileText size={20} />
             Reports
-        </Link>
-        <Link to="/settings" className="flex items-center gap-3 px-4 py-2 text-text-secondary hover:bg-dark-card hover:text-text-primary rounded-lg transition-colors">
+          </Link>
+          <Link to="/settings" className="flex items-center gap-3 px-4 py-2 text-[#94A3B8] hover:bg-[#1E293B] hover:text-white rounded-lg transition-colors">
             <Settings size={20} />
             Settings
-        </Link>
+          </Link>
         </nav>
 
-        <div className="p-4 border-t border-dark-border">
-          <button className="flex items-center gap-3 px-4 py-2 text-text-secondary hover:text-red-500 rounded-lg transition-colors w-full">
+        <div className="p-4 border-t border-[#334155]">
+          <button className="flex items-center gap-3 px-4 py-2 text-[#94A3B8] hover:text-red-500 rounded-lg transition-colors w-full">
             <LogOut size={20} />
             Logout
           </button>
@@ -56,11 +56,11 @@ function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top Navbar */}
-        <header className="bg-dark-sidebar border-b border-dark-border px-6 py-4 flex items-center justify-between">
-          <h2 className="text-text-primary font-semibold">Dashboard</h2>
+        <header className="bg-[#111827] border-b border-[#334155] px-6 py-4 flex items-center justify-between">
+          <h2 className="text-white font-semibold">Dashboard</h2>
           <div className="flex items-center gap-4">
-            <span className="text-text-secondary text-sm">Welcome, User</span>
-            <div className="w-8 h-8 rounded-full bg-primary-purple flex items-center justify-center text-white font-bold">
+            <span className="text-[#94A3B8] text-sm">Welcome, User</span>
+            <div className="w-8 h-8 rounded-full bg-[#7C3AED] flex items-center justify-center text-white font-bold">
               U
             </div>
           </div>

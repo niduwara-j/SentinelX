@@ -7,12 +7,17 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Primary colors
         'primary-purple': '#7C3AED',
         'primary-blue': '#2563EB',
+        
+        // Dark theme colors
         'dark-bg': '#0F172A',
         'dark-sidebar': '#111827',
         'dark-card': '#1E293B',
         'dark-border': '#334155',
+        
+        // Text colors
         'text-primary': '#FFFFFF',
         'text-secondary': '#94A3B8',
       }
