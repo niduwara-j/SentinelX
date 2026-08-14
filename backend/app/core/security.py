@@ -1,21 +1,55 @@
+"""
+Password hashing and JWT creation/verification.
+"""
 from datetime import datetime, timedelta, timezone
-from jose import jwt
-from passlib.context import CryptContext
-from .config import settings
+from typing import Any
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+from jose import jwt, JWTError
+import bcrypt
+from app.core.config import settings
+
+
+
+def hash_password(password: str) -> str:
+    pwd_bytes = password.encode("utf-8")[:72]
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(pwd_bytes, salt).decode("utf-8")
+
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return pwd_context.verify(plain_password, hashed_password)
+    try:
+        pwd_bytes = plain_password.encode("utf-8")[:72]
+        hash_bytes = hashed_password.encode("utf-8")
+        return bcrypt.checkpw(pwd_bytes, hash_bytes)
+    except Exception:
+        return False
 
-def get_password_hash(password: str) -> str:
-    return pwd_context.hash(password)
 
-def create_access_token(data: dict, expires_delta: timedelta | None = None) -> str:
-    to_encode = data.copy()
-    if expires_delta:
-        expire = datetime.now(timezone.utc) + expires_delta
-    else:
-        expire = datetime.now(timezone.utc) + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-    to_encode.update({"exp": expire})
+
+def create_access_token(subject: str, expires_delta: timedelta | None = None) -> str:
+    now = datetime.now(timezone.utc)
+    expire = now + (
+        expires_delta or timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    )
+    to_encode: dict[str, Any] = {
+        "sub": subject,
+        "iat": int(now.timestamp()),
+        "exp": expire,
+    }
     return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
+
+
+def decode_access_token_payload(token: str) -> dict[str, Any] | None:
+    """Returns the full decoded JWT payload if valid, else None."""
+    try:
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        return payload
+    except JWTError:
+        return None
+
+
+def decode_access_token(token: str) -> str | None:
+    """Returns the subject (username) if the token is valid, else None."""
+    payload = decode_access_token_payload(token)
+    return payload.get("sub") if payload else None
+

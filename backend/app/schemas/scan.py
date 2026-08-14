@@ -1,50 +1,45 @@
-from pydantic import BaseModel
 from datetime import datetime
-from typing import Optional, List, Dict, Any
 from enum import Enum
 
-class ScanStatus(str, Enum):
-    PENDING = "pending"
-    RUNNING = "running"
-    COMPLETED = "completed"
-    FAILED = "failed"
+from pydantic import BaseModel, Field
+
+
+class ScanType(str, Enum):
+    quick = "quick"
+    full = "full"
+
 
 class ScanCreate(BaseModel):
-    target: str
-    port_range: Optional[str] = "1-1024"
-    threads: Optional[int] = 100
+    target: str = Field(
+        description="IP address, hostname, or CIDR range, e.g. 127.0.0.1 or 192.168.1.0/24",
+        min_length=1,
+        max_length=255,
+    )
+    scan_type: ScanType = ScanType.quick
 
-class ScanResultResponse(BaseModel):
+
+class ScanResultOut(BaseModel):
     id: int
+    asset_id: int
     port: int
     protocol: str
-    service_name: Optional[str] = None
-    banner: Optional[str] = None
-    version: Optional[str] = None
-    asset_id: int
+    service_name: str | None
+    banner: str | None
 
-    class Config:
-        from_attributes = True
+    model_config = {"from_attributes": True}
 
-class ScanResponse(BaseModel):
+
+class ScanOut(BaseModel):
     id: int
     target: str
-    status: ScanStatus
+    scan_type: str
+    status: str
+    error_message: str | None
     started_at: datetime
-    finished_at: Optional[datetime] = None
-    results_count: Optional[int] = 0
+    finished_at: datetime | None
 
-    class Config:
-        from_attributes = True
+    model_config = {"from_attributes": True}
 
-class ScanDetail(BaseModel):
-    id: int
-    target: str
-    status: ScanStatus
-    started_at: datetime
-    finished_at: Optional[datetime] = None
-    scan_metadata: Optional[Dict[str, Any]] = None
-    results: List[ScanResultResponse] = []
 
-    class Config:
-        from_attributes = True
+class ScanDetailOut(ScanOut):
+    results: list[ScanResultOut] = []
