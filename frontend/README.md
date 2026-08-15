@@ -1,75 +1,54 @@
-# React + TypeScript + Vite
+# SentinelX Frontend (Version 1)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + TypeScript + Tailwind frontend, wired to the SentinelX FastAPI
+backend.
 
-Currently, two official plugins are available:
+## Setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+cd frontend
+cp .env.example .env
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Runs at `http://localhost:5173`. Make sure the backend (see `/backend`) is
+running at the URL in `.env` (`VITE_API_BASE_URL`) - default `http://localhost:8000`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Structure
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Matches the agreed frontend structure doc: `components/ pages/ layouts/
+services/ hooks/ context/ types/ routes/ styles/ utils/`.
 
-```
+- `services/` - one file per backend resource (`authService`, `scanService`,
+  `assetService`, `reportService`), all going through the shared `api.ts`
+  Axios instance which attaches the JWT and handles 401s.
+- `context/AuthContext` - holds the logged-in user, token lives in
+  `localStorage` under `sentinelx_token`.
+- `hooks/` - `useAuth`, `useAssets`, `useScanner` (handles start + polling),
+  `useReports`.
+- Sidebar already reserves (disabled) nav slots for Vulnerabilities /
+  Events / Alerts / Incidents / Threat Intel / Administration per the
+  roadmap, so later versions don't need to touch the layout.
+
+## Known V1 gaps / where to extend
+
+- **Dashboard charts** aggregate port/service data by calling
+  `GET /asset/{id}` for up to 50 assets client-side (no aggregate endpoint
+  exists yet). If Niduwara adds a `GET /assets/stats`-style endpoint later,
+  swap the `useEffect` in `pages/Dashboard.tsx` for a single call.
+- **Assets** are global (not scoped per-user) to match the backend's
+  `GET /assets` behavior - matches V1 spec, revisit if multi-tenant asset
+  ownership becomes a requirement.
+- Login talks to `/login` as `application/x-www-form-urlencoded`
+  (OAuth2 password flow) - not JSON. If that endpoint's shape ever
+  changes, update `authService.login`.
+
+## Theme
+
+Dark enterprise theme per the brief - background `#0F172A`, sidebar
+`#111827`, cards `#1E293B`, purple primary `#7C3AED`, blue secondary
+`#2563EB`. UI text uses Inter; IPs/ports/tokens/hashes render in
+JetBrains Mono (`font-mono` / `.data-mono`) so technical data reads
+distinctly from UI chrome - deliberate choice, not an accident, keep it
+consistent in new components.
