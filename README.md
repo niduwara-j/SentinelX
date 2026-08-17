@@ -774,7 +774,7 @@ The authors are not responsible for misuse of this software, unauthorized activi
 
 | Role                                   | Contributor                  | GitHub                                       |
 | :------------------------------------- | :--------------------------- | :------------------------------------------- |
-| **Full Stack & Security Architecture** | **Niduwara Jayasiri**        | [@niduwara-j](https://github.com/niduwara-j) |
+| **Full Stack & Security Architecture** | **Ninduwara Jayasiri**        | [@niduwara-j](https://github.com/niduwara-j) |
 | **Frontend & SOC Analytics**           | **DijenthinI Mariya Xavier** | [@Dijenthini](https://github.com/Dijenthini) |
 
 ---
@@ -806,7 +806,7 @@ Your support helps us continue improving the project and expanding its SOC capab
 ### Niduwara Jayasiri
 
 * GitHub: [@niduwara-j](https://github.com/niduwara-j)
-* LinkedIn: [Niduwara Jayasiri](https://www.linkedin.com/in/ninduwara-jayasiri-2169a33ab/)
+* LinkedIn: [Ninduwara Jayasiri](https://www.linkedin.com/in/ninduwara-jayasiri-2169a33ab/)
 
 ### Dijenthini Mariya Xavier
 
