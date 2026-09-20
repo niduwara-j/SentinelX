@@ -1,0 +1,27 @@
+# --- Environment / secrets ---
+.env
+.env.local
+.env.*.local
+
+# --- Python / backend ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# --- Node / frontend ---
+node_modules/
+dist/
+build/
+.vite/
+
+# --- Editor / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Docker ---
+*.log
