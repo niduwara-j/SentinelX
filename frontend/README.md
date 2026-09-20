@@ -13,8 +13,7 @@ npm run dev
 ```
 
 Runs at `http://localhost:5173`. Make sure the backend (see `/backend`) is
-running at the URL in `.env` (`VITE_API_BASE_URL`) - default `http://localhost:8001/api/v1`.
-
+running at the URL in `.env` (`VITE_API_BASE_URL`) - default `http://localhost:8000`.
 
 ## Structure
 
